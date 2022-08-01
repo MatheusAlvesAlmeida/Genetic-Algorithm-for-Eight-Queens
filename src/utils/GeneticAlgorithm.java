@@ -49,28 +49,6 @@ public class GeneticAlgorithm {
 		return parents;
 	}
 
-	// Crossover parents to create children
-	public ArrayList<int[]> crossover(ArrayList<int[]> parents) {
-		ArrayList<int[]> children = new ArrayList<>();
-		for (int i = 0; i < parents.size(); i += 2) {
-			int[] child1 = new int[defaultArray.length];
-			int[] child2 = new int[defaultArray.length];
-			int randomIndex = new Random().nextInt(defaultArray.length);
-			for (int j = 0; j < defaultArray.length; j++) {
-				if (j < randomIndex) {
-					child1[j] = parents.get(i)[j];
-					child2[j] = parents.get(i + 1)[j];
-				} else {
-					child1[j] = parents.get(i + 1)[j];
-					child2[j] = parents.get(i)[j];
-				}
-			}
-			children.add(child1);
-			children.add(child2);
-		}
-		return children;
-	}
-
 	// Order one crossover
 	public int[] crossover(int[] parent1, int[] parent2) {
 		int[] child = new int[parent1.length];
