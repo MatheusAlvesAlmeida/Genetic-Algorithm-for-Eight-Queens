@@ -56,8 +56,17 @@ public class GeneticAlgorithm {
 		return bestParents;
 	}
 
-	public void crossover() {
-
+	// Order one crossover
+	public int[] crossover(int[] parent1, int[] parent2) {
+		int[] child = new int[parent1.length];
+		int randomIndex = (int) (Math.random() * parent1.length);
+		for (int i = 0; i < randomIndex; i++) {
+			child[i] = parent1[i];
+		}
+		for (int i = randomIndex; i < parent1.length; i++) {
+			child[i] = parent2[i];
+		}
+		return child;
 	}
 
 	public int[] mutate(int[] individual) {
