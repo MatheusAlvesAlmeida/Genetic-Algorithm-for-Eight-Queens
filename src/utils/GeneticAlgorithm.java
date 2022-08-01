@@ -1,7 +1,6 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -9,11 +8,16 @@ public class GeneticAlgorithm {
 
 	private int[] defaultArray = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
+	// Generate individual random array
 	public int[] generateIndividual() {
-		Collections.shuffle(Arrays.asList(this.defaultArray));
-		return this.defaultArray;
+		int[] individual = new int[defaultArray.length];
+		for (int i = 0; i < individual.length; i++) {
+			individual[i] = defaultArray[i];
+		}
+		return individual;
 	}
 
+	// Generate random population
 	public ArrayList<int[]> generatePopulation(int populationSize) {
 		ArrayList<int[]> population = new ArrayList<>();
 		for (int i = 0; i < populationSize; i++) {
@@ -34,26 +38,37 @@ public class GeneticAlgorithm {
 		return fitness;
 	}
 
-	public ArrayList<int[]> chooseParents(ArrayList<int[]> population) {
+	// Select five parents and choose two best parents
+	public ArrayList<int[]> selectParents(ArrayList<int[]> population) {
 		ArrayList<int[]> parents = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			int randomIndex = (int) (Math.random() * population.size());
+			int randomIndex = new Random().nextInt(population.size());
 			parents.add(population.get(randomIndex));
 		}
-		int bestFitness = 1000000;
-		int secondeBestFitness = 1000000;
-		for (int i = 0; i < parents.size(); i++) {
-			if (calculateFitness(parents.get(i)) < bestFitness) {
-				Collections.swap(parents, 1, 0);
-				Collections.swap(parents, i, 0);
-			} else if (calculateFitness(parents.get(i)) < secondeBestFitness) {
-				Collections.swap(parents, i, 1);
+		Collections.sort(parents, (a, b) -> calculateFitness(a) - calculateFitness(b));
+		return parents;
+	}
+
+	// Crossover parents to create children
+	public ArrayList<int[]> crossover(ArrayList<int[]> parents) {
+		ArrayList<int[]> children = new ArrayList<>();
+		for (int i = 0; i < parents.size(); i += 2) {
+			int[] child1 = new int[defaultArray.length];
+			int[] child2 = new int[defaultArray.length];
+			int randomIndex = new Random().nextInt(defaultArray.length);
+			for (int j = 0; j < defaultArray.length; j++) {
+				if (j < randomIndex) {
+					child1[j] = parents.get(i)[j];
+					child2[j] = parents.get(i + 1)[j];
+				} else {
+					child1[j] = parents.get(i + 1)[j];
+					child2[j] = parents.get(i)[j];
+				}
 			}
+			children.add(child1);
+			children.add(child2);
 		}
-		ArrayList<int[]> bestParents = new ArrayList<>();
-		bestParents.add(parents.get(0));
-		bestParents.add(parents.get(1));
-		return bestParents;
+		return children;
 	}
 
 	// Order one crossover
@@ -69,16 +84,13 @@ public class GeneticAlgorithm {
 		return child;
 	}
 
-	public int[] mutate(int[] individual) {
-		Random randomNumber = new Random();
-		if (randomNumber.nextInt(100) > 39) {
-			int aux = randomNumber.nextInt(8);
-			int aux2 = randomNumber.nextInt(8);
-			int aux3 = individual[aux];
-			int aux4 = individual[aux2];
-			individual[aux2] = aux3;
-			individual[aux] = aux4;
-		}
-		return individual;
+	// mutate child by swaping two random elements
+	public int[] mutate(int[] child) {
+		int randomIndex1 = new Random().nextInt(child.length);
+		int randomIndex2 = new Random().nextInt(child.length);
+		int temp = child[randomIndex1];
+		child[randomIndex1] = child[randomIndex2];
+		child[randomIndex2] = temp;
+		return child;
 	}
 }
