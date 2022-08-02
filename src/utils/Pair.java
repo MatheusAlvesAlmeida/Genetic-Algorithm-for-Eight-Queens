@@ -1,14 +1,12 @@
 package utils;
 
-public class Pair<T, U, W> {
+public class Pair<T, U> {
     public T first;
     public U second;
-    public W third;
 
-    public Pair(T t, U u, W w) {
+    public Pair(T t, U u) {
         first = t;
         second = u;
-        third = w;
     }
 
     @Override
