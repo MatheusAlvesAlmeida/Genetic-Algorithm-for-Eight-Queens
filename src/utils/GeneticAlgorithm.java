@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -10,15 +11,21 @@ public class GeneticAlgorithm {
 
 	// Generate individual random array
 	public int[] generateIndividual() {
-		int[] individual = new int[defaultArray.length];
-		for (int i = 0; i < individual.length; i++) {
-			individual[i] = defaultArray[i];
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < defaultArray.length; i++) {
+			list.add(defaultArray[i]);
 		}
-		return individual;
+		Collections.shuffle(list);
+		int[] shuffledArray = new int[list.size()];
+		for (int i = 0; i < list.size(); i++) {
+			shuffledArray[i] = list.get(i);
+		}
+		return shuffledArray;
 	}
 
 	// Generate random population
 	public ArrayList<int[]> generatePopulation(int populationSize) {
+		System.out.println("Generating population...");
 		ArrayList<int[]> population = new ArrayList<>();
 		for (int i = 0; i < populationSize; i++) {
 			population.add(generateIndividual());

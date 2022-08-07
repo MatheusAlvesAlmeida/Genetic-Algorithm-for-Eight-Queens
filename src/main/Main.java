@@ -25,7 +25,8 @@ public class Main {
 			population.set(population.size() - 1, child);
 			population.set(population.size() - 2, child2);
 
-			Collections.sort(population, (a, b) -> ga.calculateFitness(a) - ga.calculateFitness(b));
+			Collections.sort(population, (a, b) -> ga.calculateFitness(a) -
+					ga.calculateFitness(b));
 
 			// Print best individual and fitness
 			System.out.println("Best individual: " + Arrays.toString(population.get(0)));
