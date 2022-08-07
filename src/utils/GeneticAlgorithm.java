@@ -28,8 +28,8 @@ public class GeneticAlgorithm {
 
 	public int calculateFitness(int[] individual) {
 		int fitness = 0;
-		for (int i = 1; i <= individual.length; i++) {
-			for (int j = 1; j <= individual.length; j++) {
+		for (int i = 0; i < individual.length; i++) {
+			for (int j = 0; j < individual.length; j++) {
 				if ((individual[i] != individual[j]) && Math.abs(individual[i] - individual[j]) == Math.abs(i - j)) {
 					fitness++;
 				}
