@@ -20,7 +20,10 @@ public class Main {
 			ArrayList<int[]> parents = ga.selectParents(population);
 			int[] child = ga.crossover(parents.get(0), parents.get(1));
 			child = ga.mutate(child);
+			int[] child2 = ga.crossover(parents.get(0), parents.get(1));
+			child2 = ga.mutate(child2);
 			population.set(population.size() - 1, child);
+			population.set(population.size() - 2, child2);
 
 			Collections.sort(population, (a, b) -> ga.calculateFitness(a) - ga.calculateFitness(b));
 
