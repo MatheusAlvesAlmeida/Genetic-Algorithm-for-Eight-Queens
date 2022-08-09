@@ -16,35 +16,21 @@ public class Main {
 
 		while ((ga.calculateFitness(population.get(0)) != 0) || i == 10000) {
 			System.out.println("Generation " + i);
-
+			// Select 5 parents and choose two best parents
 			ArrayList<int[]> parents = ga.selectParents(population);
 			int[] child = ga.crossover(parents.get(0), parents.get(1));
 			int[] child2 = ga.crossover(parents.get(1), parents.get(0));
-			if(ga.contains(child, 0) || ga.contains(child2, 0)) {
-				// print parents
-				System.out.println("Parents:");
-				System.out.println(Arrays.toString(parents.get(0)));
-				System.out.println(Arrays.toString(parents.get(1)));
-				// print child
-				System.out.println("Child:");
-				System.out.println(Arrays.toString(child));
-				System.out.println(Arrays.toString(child2));
-				System.out.println("");
-				break;
-			}
+			// Mutate childrens and add to population replacing the worst individual
 			child = ga.mutate(child);
 			child2 = ga.mutate(child2);
 			population.set(population.size() - 1, child);
 			population.set(population.size() - 2, child2);
+			// Sort population by fitness
 			Collections.sort(population, (a, b) -> ga.calculateFitness(a) -
 					ga.calculateFitness(b));
 
 			System.out.println("Best individual: " + Arrays.toString(population.get(0)));
 			System.out.println("Fitness: " + ga.calculateFitness(population.get(0)) + "\n");
-
-			if(i == 30){
-				System.out.println("teste");
-			}
 			i++;
 		}
 	}

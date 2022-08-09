@@ -1,9 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 public class GeneticAlgorithm {
 
@@ -56,32 +54,32 @@ public class GeneticAlgorithm {
 		return parents;
 	}
 
-	public int[] crossover(int[] parent1, int[] parent2){
+	public int[] crossover(int[] parent1, int[] parent2) {
 		int[] child = new int[parent1.length];
 		int randomIndex = this.getRandomNumber(0, 6);
-		int randomIndex2 = this.getRandomNumber(randomIndex++, 7);
+		int randomIndex2 = this.getRandomNumber(randomIndex + 1, 7);
 
-		System.out.println(randomIndex);
-		System.out.println(randomIndex2);
 		for (int i = randomIndex; i < randomIndex2; i++) {
 			child[i] = parent1[i];
-			System.out.println("for 1 " + Arrays.toString(child));
 		}
 
 		for (int i = randomIndex2; i < child.length; i++) {
-			if(!this.contains(child, parent2[i])){
+			if (!this.contains(child, parent2[i]) && child[i] == 0) {
 				child[i] = parent2[i];
 			}
-			System.out.println("for 2 " + Arrays.toString(child));
+
 		}
 
-		//PROBLEMA TÁ AQUI
-		for(int i = 0; i < child.length; i++){
-			if(!this.contains(child, parent2[i])){
-				child[i] = parent2[i];
+		for (int i = 0; i < parent2.length; i++) {
+			if (!this.contains(child, parent2[i])) {
+				for (int j = 0; j < child.length; j++) {
+					if (child[j] == 0) {
+						child[j] = parent2[i];
+						j = child.length;
+					}
+				}
 			}
-			System.out.println("for 3 " + Arrays.toString(child));
-		}	
+		}
 
 		return child;
 	}
