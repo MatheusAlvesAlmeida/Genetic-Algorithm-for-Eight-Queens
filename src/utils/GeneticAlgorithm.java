@@ -55,42 +55,49 @@ public class GeneticAlgorithm {
 	}
 
 	public int[] crossover(int[] parent1, int[] parent2) {
-		int[] child = new int[parent1.length];
-		int randomIndex = this.getRandomNumber(0, 6);
-		int randomIndex2 = this.getRandomNumber(randomIndex + 1, 7);
+		int prob = this.getRandomNumber(1, 100);
+		if (prob <= 90) {
+			int[] child = new int[parent1.length];
+			int randomIndex = this.getRandomNumber(0, 6);
+			int randomIndex2 = this.getRandomNumber(randomIndex + 1, 7);
 
-		for (int i = randomIndex; i < randomIndex2; i++) {
-			child[i] = parent1[i];
-		}
-
-		for (int i = randomIndex2; i < child.length; i++) {
-			if (!this.contains(child, parent2[i]) && child[i] == 0) {
-				child[i] = parent2[i];
+			for (int i = randomIndex; i < randomIndex2; i++) {
+				child[i] = parent1[i];
 			}
 
-		}
+			for (int i = randomIndex2; i < child.length; i++) {
+				if (!this.contains(child, parent2[i]) && child[i] == 0) {
+					child[i] = parent2[i];
+				}
 
-		for (int i = 0; i < parent2.length; i++) {
-			if (!this.contains(child, parent2[i])) {
-				for (int j = 0; j < child.length; j++) {
-					if (child[j] == 0) {
-						child[j] = parent2[i];
-						j = child.length;
+			}
+
+			for (int i = 0; i < parent2.length; i++) {
+				if (!this.contains(child, parent2[i])) {
+					for (int j = 0; j < child.length; j++) {
+						if (child[j] == 0) {
+							child[j] = parent2[i];
+							j = child.length;
+						}
 					}
 				}
 			}
-		}
 
-		return child;
+			return child;
+		}
+		return parent1;
 	}
 
 	// mutate child by swaping two random elements
 	public int[] mutate(int[] child) {
-		int randomIndex1 = this.getRandomNumber(0, 7);
-		int randomIndex2 = this.getRandomNumber(0, 7);
-		int temp = child[randomIndex1];
-		child[randomIndex1] = child[randomIndex2];
-		child[randomIndex2] = temp;
+		int prob = this.getRandomNumber(1, 100);
+		if (prob <= 40) {
+			int randomIndex1 = this.getRandomNumber(0, 7);
+			int randomIndex2 = this.getRandomNumber(0, 7);
+			int temp = child[randomIndex1];
+			child[randomIndex1] = child[randomIndex2];
+			child[randomIndex2] = temp;
+		}
 		return child;
 	}
 
