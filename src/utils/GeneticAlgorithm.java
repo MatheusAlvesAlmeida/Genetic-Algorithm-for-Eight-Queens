@@ -45,6 +45,7 @@ public class GeneticAlgorithm {
 
 	// Select five parents and choose two best parents
 	public ArrayList<int[]> selectParents(ArrayList<int[]> population) {
+		Collections.shuffle(population);
 		ArrayList<int[]> parents = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
 			int randomIndex = this.getRandomNumber(0, population.size() - 1);
