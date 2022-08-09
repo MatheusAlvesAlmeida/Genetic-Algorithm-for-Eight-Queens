@@ -12,7 +12,7 @@ public class Main {
 		int i = 0;
 		GeneticAlgorithm ga = new GeneticAlgorithm();
 
-		ArrayList<int[]> population = ga.generatePopulation(50);
+		ArrayList<int[]> population = ga.generatePopulation(100);
 
 		while ((ga.calculateFitness(population.get(0)) != 0) || i == 10000) {
 			System.out.println("Generation " + i);
