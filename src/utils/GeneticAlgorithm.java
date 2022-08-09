@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -48,33 +49,64 @@ public class GeneticAlgorithm {
 	public ArrayList<int[]> selectParents(ArrayList<int[]> population) {
 		ArrayList<int[]> parents = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			int randomIndex = new Random().nextInt(population.size());
+			int randomIndex = this.getRandomNumber(0, population.size() - 1);
 			parents.add(population.get(randomIndex));
 		}
 		Collections.sort(parents, (a, b) -> calculateFitness(a) - calculateFitness(b));
 		return parents;
 	}
 
-	// Order one crossover
-	public int[] crossover(int[] parent1, int[] parent2) {
+	public int[] crossover(int[] parent1, int[] parent2){
 		int[] child = new int[parent1.length];
-		int randomIndex = (int) (Math.random() * parent1.length);
-		for (int i = 0; i < randomIndex; i++) {
+		int randomIndex = this.getRandomNumber(0, 6);
+		int randomIndex2 = this.getRandomNumber(randomIndex++, 7);
+
+		System.out.println(randomIndex);
+		System.out.println(randomIndex2);
+		for (int i = randomIndex; i < randomIndex2; i++) {
 			child[i] = parent1[i];
+			System.out.println("for 1 " + Arrays.toString(child));
 		}
-		for (int i = randomIndex; i < parent1.length; i++) {
-			child[i] = parent2[i];
+
+		for (int i = randomIndex2; i < child.length; i++) {
+			if(!this.contains(child, parent2[i])){
+				child[i] = parent2[i];
+			}
+			System.out.println("for 2 " + Arrays.toString(child));
 		}
+
+		//PROBLEMA TÁ AQUI
+		for(int i = 0; i < child.length; i++){
+			if(!this.contains(child, parent2[i])){
+				child[i] = parent2[i];
+			}
+			System.out.println("for 3 " + Arrays.toString(child));
+		}	
+
 		return child;
 	}
 
 	// mutate child by swaping two random elements
 	public int[] mutate(int[] child) {
-		int randomIndex1 = new Random().nextInt(child.length);
-		int randomIndex2 = new Random().nextInt(child.length);
+		int randomIndex1 = this.getRandomNumber(0, 7);
+		int randomIndex2 = this.getRandomNumber(0, 7);
 		int temp = child[randomIndex1];
 		child[randomIndex1] = child[randomIndex2];
 		child[randomIndex2] = temp;
 		return child;
+	}
+
+	// Check if array contains an element
+	public boolean contains(int[] array, int element) {
+		for (int i = 0; i < array.length; i++) {
+			if (array[i] == element) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public int getRandomNumber(int min, int max) {
+		return (int) ((Math.random() * (max - min)) + min);
 	}
 }
