@@ -12,14 +12,14 @@ public class Main {
 		int i = 0;
 		GeneticAlgorithm ga = new GeneticAlgorithm();
 
-		ArrayList<int[]> population = ga.generatePopulation(100);
+		ArrayList<String[]> population = ga.generatePopulation(100);
 
 		while ((ga.calculateFitness(population.get(0)) != 0) || i == 10000) {
 			System.out.println("Generation " + i);
 			// Select 5 parents and choose two best parents
-			ArrayList<int[]> parents = ga.selectParents(population);
-			int[] child = ga.crossover(parents.get(0), parents.get(1));
-			int[] child2 = ga.crossover(parents.get(1), parents.get(0));
+			ArrayList<String[]> parents = ga.selectParents(population);
+			String[] child = ga.crossover(parents.get(0), parents.get(1));
+			String[] child2 = ga.crossover(parents.get(1), parents.get(0));
 			// Mutate childrens and add to population replacing the worst individual
 			child = ga.mutate(child);
 			child2 = ga.mutate(child2);
