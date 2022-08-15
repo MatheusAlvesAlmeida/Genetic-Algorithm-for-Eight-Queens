@@ -96,7 +96,7 @@ public class GeneticAlgorithm {
 	// mutate child by swaping two random elements
 	public String[] mutate(String[] child) {
 		int prob = this.getRandomNumber(1, 100);
-		if (prob <= 40) {
+		if (prob <= 80) {
 			int randomIndex1 = this.getRandomNumber(0, 7);
 			int randomIndex2 = this.getRandomNumber(0, 7);
 			String temp = child[randomIndex1];
