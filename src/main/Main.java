@@ -9,7 +9,7 @@ import utils.GeneticAlgorithm;
 public class Main {
 
 	public static void main(String[] args) {
-		int i = 0;
+		int i = 1;
 		GeneticAlgorithm ga = new GeneticAlgorithm();
 
 		int convergenceTimes = 0;
@@ -42,6 +42,8 @@ public class Main {
 				// Mutate childrens and add to population replacing the worst individual
 				child = ga.mutate(child);
 				child2 = ga.mutate(child2);
+				Collections.sort(population, (a, b) -> ga.calculateFitness(a) -
+						ga.calculateFitness(b));
 				population.set(population.size() - 1, child);
 				population.set(population.size() - 2, child2);
 
@@ -60,7 +62,7 @@ public class Main {
 			convergenceTimes++;
 			// Reset population and start again
 			population = ga.generatePopulation(100);
-			i = 0;
+			i = 1;
 		}
 		System.out.println("Convergence times: " + convergenceTimes);
 		System.out.println("Average fitness: " + Arrays.toString(averageFitness));
